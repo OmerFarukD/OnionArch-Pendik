@@ -20,15 +20,21 @@ public class BaseDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+      
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        modelBuilder.Entity<User>()
+            .ToTable("AppUsers")
+            .HasDiscriminator<string>("Discriminator")
+            .HasValue<User>("User")
+            .HasValue<AppUser>("AppUser");
     }
 
    public DbSet<Category> Categories { get; set; }
    public DbSet<Product> Products { get; set; }
    public DbSet<ProductImage> ProductImages { get; set; }
    public DbSet<SubCategory> SubCategories { get; set; }
-   public DbSet<AppUser> Users { get; set; }
+   public DbSet<AppUser> AppUsers { get; set; }
    public DbSet<Order> Orders { get; set; }
    public DbSet<OrderItem> OrderItems { get; set; }
    public DbSet<Tag> Tags { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Core.Persistence.Repositories;
 
+
 namespace ECommerce.Domain.Entities;
 
 public sealed class Product : Entity<Guid>
@@ -14,4 +15,6 @@ public sealed class Product : Entity<Guid>
     public SubCategory SubCategory { get; set; }
     public ICollection<ProductTag> ProductTags { get; set; }
     public ICollection<ProductImage> ProductImages { get; set; }
+    public ICollection<OrderItem> OrderItems { get; set; }
 }
+
