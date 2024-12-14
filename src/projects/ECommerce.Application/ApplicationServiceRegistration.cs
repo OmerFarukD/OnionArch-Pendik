@@ -5,6 +5,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Login;
 using Core.Application.Pipelines.Performance;
 using ECommerce.Application.Features.Auth.Rules;
@@ -24,7 +25,8 @@ public static class ApplicationServiceRegistration
         services.AddScoped<UserBusinessRules>();
         services.AddScoped<CategoryBusinessRules>();
         services.AddScoped<ProductBusinessRules>();
-        
+
+        services.AddScoped<LoggerServiceBase, FileLogger>();
         
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserWithTokenService, UserWithTokenService>();
@@ -38,6 +40,7 @@ public static class ApplicationServiceRegistration
             con.AddOpenBehavior(typeof(RequestValidationBehavior<,>));
             con.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             con.AddOpenBehavior(typeof(LoginBehavior<,>));
+            con.AddOpenBehavior(typeof(LoggingBehavior<,>));
         } );
 
         return services;
