@@ -8,7 +8,10 @@ using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Login;
 using Core.Application.Pipelines.Performance;
 using ECommerce.Application.Features.Auth.Rules;
+using ECommerce.Application.Features.Products.Rules;
+using ECommerce.Application.Services.RoleServices;
 using ECommerce.Application.Services.UserServices;
+using ECommerce.Application.Services.UserWithTokenServices;
 using MediatR;
 
 namespace ECommerce.Application;
@@ -20,8 +23,12 @@ public static class ApplicationServiceRegistration
 
         services.AddScoped<UserBusinessRules>();
         services.AddScoped<CategoryBusinessRules>();
-        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ProductBusinessRules>();
         
+        
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserWithTokenService, UserWithTokenService>();
+        services.AddScoped<IRoleService, RoleService>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehavior<,>));
         services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
         services.AddAutoMapper(Assembly.GetExecutingAssembly());

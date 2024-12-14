@@ -39,7 +39,7 @@ public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
 
         if (!isAuthorized)
         {
-            throw new AuthorizationException("You are not authorized.");
+            throw new AuthorizationException("Yetkiniz Yok");
         }
 
       

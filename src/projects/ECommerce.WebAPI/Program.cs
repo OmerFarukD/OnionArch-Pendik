@@ -1,7 +1,12 @@
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.CrossCuttingConcerns.Serilog.Loggers;
+using Core.Security;
+using Core.Security.Encryption;
+using Core.Security.JWT;
 using ECommerce.Application;
 using ECommerce.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
@@ -9,7 +14,30 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddApplicationServiceDependencies();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddSecurityServices();
 builder.Services.AddHttpContextAccessor();
+
+const string tokenOptionsConfigurationName = "TokenOptions";
+TokenOptions tokenOptions = builder.Configuration.GetSection(tokenOptionsConfigurationName).Get<TokenOptions>()
+                            ?? throw new InvalidOperationException(
+                                $"{tokenOptionsConfigurationName} section bulunamadı");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateLifetime = true,
+                ValidIssuer = tokenOptions.Issuer,
+                ValidAudience = tokenOptions.Audience,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+            };
+        }
+    );
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -23,7 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthorization();
+app.UseAuthentication(); // kimlik doğrulama 
+app.UseAuthorization(); // yetkile
 
 app.MapControllers();
 

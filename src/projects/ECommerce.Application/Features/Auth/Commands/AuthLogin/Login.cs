@@ -18,7 +18,14 @@ public static class Login
         private readonly IUserService _userService;
         private readonly IUserWithTokenService _userWithTokenService;
         private readonly UserBusinessRules _userBusinessRules;
-        
+
+        public Handler(IUserService userService, IUserWithTokenService userWithTokenService, UserBusinessRules userBusinessRules)
+        {
+            _userService = userService;
+            _userWithTokenService = userWithTokenService;
+            _userBusinessRules = userBusinessRules;
+        }
+
         public async Task<AccessToken> Handle(Command request, CancellationToken cancellationToken)
         {
             // email kontrolünü yap

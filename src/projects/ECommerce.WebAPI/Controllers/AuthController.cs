@@ -1,5 +1,6 @@
 ﻿using Core.Security.Dtos;
 using ECommerce.Application.Features.Auth.Commands.AuthLogin;
+using ECommerce.Application.Features.Auth.Commands.AuthRegister;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,5 +18,14 @@ public class AuthController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(new Login.Command(dto));
         return Ok(response);
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterForUser(UserForRegisterDto dto)
+    {
+        var response = await mediator.Send(new Register.Command(dto));
+
+        return Ok(response);
+    }
+    
     
 }
