@@ -2,8 +2,8 @@
 
 public interface ICachableRequest
 {
-    string CacheKey { get; }
-    bool ByPassCache { get; }
-    string? CacheGroupKey { get; }
+    string CacheKey { get; } // GetProductsList 
+    bool ByPassCache { get; } // true
+    string? CacheGroupKey { get; } // Products
     TimeSpan? SlidingExpiration { get; }
 }

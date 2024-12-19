@@ -5,6 +5,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Core.Application.Pipelines.Authorization;
+using Core.Application.Pipelines.Caching;
 using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Login;
 using Core.Application.Pipelines.Performance;
@@ -26,7 +27,7 @@ public static class ApplicationServiceRegistration
         services.AddScoped<CategoryBusinessRules>();
         services.AddScoped<ProductBusinessRules>();
 
-        services.AddScoped<LoggerServiceBase, FileLogger>();
+        services.AddTransient<LoggerServiceBase, MsSqlLogger>();
         
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserWithTokenService, UserWithTokenService>();
@@ -41,6 +42,8 @@ public static class ApplicationServiceRegistration
             con.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
             con.AddOpenBehavior(typeof(LoginBehavior<,>));
             con.AddOpenBehavior(typeof(LoggingBehavior<,>));
+            con.AddOpenBehavior(typeof(CachingBehavior<,>));
+            con.AddOpenBehavior(typeof(CacheRemovingBehavior<,>));
         } );
 
         return services;

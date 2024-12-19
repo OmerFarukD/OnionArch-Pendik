@@ -4,6 +4,7 @@ using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
 using ECommerce.Application;
+using ECommerce.Infrastructure.CloudinaryServices;
 using ECommerce.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,10 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddScoped<LoggerServiceBase, FileLogger>();
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddStackExchangeRedisCache(opt=> opt.Configuration="localhost:6381");
 builder.Services.AddApplicationServiceDependencies();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddSecurityServices();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CloudinaryService>();
+
+
 
 const string tokenOptionsConfigurationName = "TokenOptions";
 TokenOptions tokenOptions = builder.Configuration.GetSection(tokenOptionsConfigurationName).Get<TokenOptions>()
@@ -43,7 +48,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.ConfigureCustomExceptionMiddleware();
+//app.ConfigureCustomExceptionMiddleware();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

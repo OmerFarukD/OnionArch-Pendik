@@ -12,7 +12,7 @@ where TRequest : IRequest<TResponse> ,ICachableRequest
     private readonly CacheSettings _cacheSettings;
     private readonly IDistributedCache _cache;
 
-    public CachingBehavior( IDistributedCache cache, IConfiguration configuration)
+    public CachingBehavior(IDistributedCache cache, IConfiguration configuration)
     {
         _cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>()?? throw new InvalidOperationException();
         _cache = cache;
@@ -50,13 +50,16 @@ where TRequest : IRequest<TResponse> ,ICachableRequest
 
         byte[] serializeData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(response));
 
+        
+        // 1 Gün
+        // Products:{ProductList: [Ürün1,Ürün2,Ürün3]}
+        // 
         await _cache.SetAsync(request.CacheKey, serializeData,cacheOptions, cancellationToken);
 
         if (request.CacheGroupKey!=null)
         {
             await AddCacheKeyToGroup(request,slidingExpiration,cancellationToken);
         }
-        
         return response;
     }
      private async Task AddCacheKeyToGroup(TRequest request, TimeSpan slidingExpiration, CancellationToken cancellationToken)

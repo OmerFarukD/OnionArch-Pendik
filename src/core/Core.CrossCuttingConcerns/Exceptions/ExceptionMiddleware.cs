@@ -13,12 +13,13 @@ public class ExceptionMiddleware
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly LoggerServiceBase _loggerService;
 
-    public ExceptionMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor)
+    public ExceptionMiddleware(RequestDelegate next, IHttpContextAccessor httpContextAccessor,LoggerServiceBase loggerService)
     {
         _next = next;
         _exceptionHandler = new HttpExceptionHandler();
         _httpContextAccessor = httpContextAccessor;
-       
+        _loggerService = loggerService;
+
     }
 
 
@@ -30,7 +31,7 @@ public class ExceptionMiddleware
         }
         catch (Exception e)
         {
-           // await LogException(httpContext, e);
+            await LogException(httpContext, e);
             await HandleExceptionAsync(httpContext.Response, e);
         }
 
