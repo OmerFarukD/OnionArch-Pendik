@@ -16,8 +16,6 @@
     <Folder Include="Features\Auth\Queries\" />
     <Folder Include="Features\Categories\Commands\Update\" />
     <Folder Include="Features\ProductImages\Costants\" />
-    <Folder Include="Features\ProductImages\Queries\GetListByPaginate\" />
-    <Folder Include="Features\ProductImages\Queries\GetListByProductId\" />
     <Folder Include="Features\ProductImages\Rules\" />
     <Folder Include="Features\Products\Constants\" />
   </ItemGroup>

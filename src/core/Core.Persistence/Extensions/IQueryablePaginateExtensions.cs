@@ -11,7 +11,7 @@ public static class IQueryablePaginateExtensions
         CancellationToken cancellationToken = default
     )
     {
-        List<T> items = await source.Skip(index * size).Take(size + 1).ToListAsync(cancellationToken);
+        List<T> items = await source.Skip(index * size).Take(size).ToListAsync(cancellationToken);
 
         int count = items.Count > size ? items.Count + index * size : items.Count;
 

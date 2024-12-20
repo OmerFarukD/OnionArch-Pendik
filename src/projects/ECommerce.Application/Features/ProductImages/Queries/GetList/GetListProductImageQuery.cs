@@ -8,9 +8,9 @@ namespace ECommerce.Application.Features.ProductImages.Queries.GetList;
 
 public sealed class GetListProductImageQuery : IRequest<List<GetListProductImageResponse>>, ICachableRequest
 {
-    public string CacheKey => "ProductImages";
+    public string CacheKey => "GetListProductImages";
     public bool ByPassCache => false;
-    public string? CacheGroupKey => "GetListProductImages";
+    public string? CacheGroupKey => "ProductImages";
     public TimeSpan? SlidingExpiration { get; }
     
     

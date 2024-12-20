@@ -14,9 +14,9 @@ public sealed class ProductImageAddCommand : IRequest<ProductImageAddedResponseD
     public Guid ProductId { get; set; }
     public IFormFile File { get; set; }
 
-    public string CacheKey => "ProductImages";
+    public string CacheKey => "";
     public bool ByPassCache => false;
-    public string? CacheGroupKey => "";
+    public string? CacheGroupKey => "ProductImages";
     
     
     public sealed class ProductImageAddCommandHandler: IRequestHandler<ProductImageAddCommand,ProductImageAddedResponseDto>
