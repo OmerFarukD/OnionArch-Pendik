@@ -15,11 +15,11 @@ namespace ECommerce.WebAPI.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly CloudinaryService _cloudinaryService;
-    public CategoriesController(IMediator mediator,CloudinaryService cloudinaryService)
+
+    public CategoriesController(IMediator mediator)
     {
         _mediator = mediator;
-        _cloudinaryService = cloudinaryService;
+
     }
 
     [HttpPost("create")]
@@ -67,13 +67,4 @@ public class CategoriesController : ControllerBase
 
         return Ok(command);
     }
-
-    
-    [HttpPost("categories")]
-    public async Task<IActionResult> UploadImage(IFormFile formFile)
-    {
-        var result = await _cloudinaryService.UploadImage(formFile,"Deneme");
-        return Ok(result);
-    }
-    
 }

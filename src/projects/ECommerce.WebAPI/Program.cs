@@ -4,6 +4,7 @@ using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
 using ECommerce.Application;
+using ECommerce.Infrastructure;
 using ECommerce.Infrastructure.CloudinaryServices;
 using ECommerce.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,7 +19,7 @@ builder.Services.AddApplicationServiceDependencies();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddSecurityServices();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<CloudinaryService>();
+builder.Services.AddInfrastructureDependencies(builder.Configuration);
 
 
 

@@ -17,5 +17,8 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
             .HasForeignKey(i => i.ProductId)
             .OnDelete(DeleteBehavior.NoAction);
         builder.HasQueryFilter(i => !i.DeletedDate.HasValue);
+
+
+        builder.Navigation(x => x.Product).AutoInclude();
     }
 }
