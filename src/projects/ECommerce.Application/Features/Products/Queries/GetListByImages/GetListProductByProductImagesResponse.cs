@@ -1,8 +1,5 @@
 ﻿namespace ECommerce.Application.Features.Products.Queries.GetListByImages;
-
-
 // Ürünler listelenirken Url ler ise bana bir listede gelsin.
-
 public class GetListProductByProductImagesResponse
 {
     public string Name { get; set; }    

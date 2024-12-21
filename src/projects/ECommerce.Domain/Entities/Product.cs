@@ -1,6 +1,4 @@
 ﻿using Core.Persistence.Repositories;
-
-
 namespace ECommerce.Domain.Entities;
 
 public sealed class Product : Entity<Guid>

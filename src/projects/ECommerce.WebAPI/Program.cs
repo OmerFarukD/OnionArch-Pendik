@@ -1,5 +1,6 @@
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.CrossCuttingConcerns.Serilog.Loggers;
+using Core.ElasticSearch;
 using Core.Security;
 using Core.Security.Encryption;
 using Core.Security.JWT;
@@ -20,7 +21,7 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddSecurityServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddInfrastructureDependencies(builder.Configuration);
-
+builder.Services.AddElasticSearch(builder.Configuration);
 
 
 const string tokenOptionsConfigurationName = "TokenOptions";
